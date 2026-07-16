@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         X おすすめ非表示
+// @name         X おすすめ・広告非表示
 // @namespace    local.codex.hide-x-for-you
-// @version      1.0.0
-// @description  Xの「おすすめ」タブを隠し、ホームでは「フォロー中」を表示します。
+// @version      1.1.0
+// @description  Xの「おすすめ」とタイムライン広告を隠し、ホームでは「フォロー中」を表示します。
 // @match        https://x.com/*
 // @match        https://twitter.com/*
 // @run-at       document-start
@@ -45,8 +45,28 @@
     target.dataset.hideXForYou = 'true';
   };
 
+  const hideTimelineAds = () => {
+    document
+      .querySelectorAll('[data-testid="placementTracking"]')
+      .forEach((placement) => {
+        const promotedPost = placement.querySelector(
+          'article[data-testid="tweet"]'
+        );
+
+        if (!promotedPost) return;
+
+        const target =
+          placement.closest('[data-testid="cellInnerDiv"]') || placement;
+
+        target.style.setProperty('display', 'none', 'important');
+        target.dataset.hideXAd = 'true';
+      });
+  };
+
   const updateTimeline = () => {
     updateScheduled = false;
+
+    hideTimelineAds();
 
     if (!/^\/home\/?$/.test(location.pathname)) return;
 
