@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         X おすすめ・広告非表示
+// @name         X おすすめ非表示
 // @namespace    local.codex.hide-x-for-you
 // @version      1.1.0
 // @description  Xの「おすすめ」とタイムライン広告を隠し、ホームでは「フォロー中」を表示します。
